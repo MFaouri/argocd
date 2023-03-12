@@ -1,0 +1,37 @@
+configMap:
+  metadata:
+    name: orders
+  data:
+    springProfilesActive: mysql,rabbitmq
+    springRabbitmqHost: rabbitmq.rabbitmq.svc
+
+secrets:
+  metadata:
+    name: orders-db
+  data:
+    url: "jdbc:mysql://orders-mysql:3306/orders"
+    username: "orders_user"
+    password: "default_password"
+
+service-mysql:
+  metadata:
+    name: orders-mysql
+  spec:
+    port: 3306
+    targetPort: mysql
+    portName: mysql
+
+deployment-mysql:
+  spec:
+    replicas: 1
+  image:
+    repository: public.ecr.aws/docker/library/mysql
+    tag: 5.7
+    pullPolicy: IfNotPresent
+
+  mysqlRootPassword: my-secret-pw
+  mysqlDatabase: orders
+  mysqlUser: orders_user
+  mysqlPassword: default_password
+
+  containerPort: 3306

@@ -1,0 +1,53 @@
+configMap:
+  metadata:
+    name: checkout
+  data:
+    redisUrl: redis://checkout-redis:6379
+    ordersEndpoint: http://orders.orders.svc:80
+
+serviceAccount:
+  name: checkout
+
+  namespace:
+  name: checkout
+  createdBy: eks-workshop
+
+deployment-redis.yaml:
+  replicas: 1
+  labels:
+    createdBy: eks-workshop
+    team: database
+  image:
+    repository: public.ecr.aws/docker/library/redis
+    tag: 6.0-alpine
+    pullPolicy: IfNotPresent
+  containerPort: 6379
+
+checkout:
+  replicas: 1
+  fsGroup: 1000
+  image:
+    repository: public.ecr.aws/aws-containers/retail-store-sample-checkout
+    tag: latest
+    pullPolicy: IfNotPresent
+  resources:
+    limits:
+      memory: 512Mi
+    requests:
+      cpu: 250m
+      memory: 512Mi
+
+service-redis:
+  metadata:
+    name: checkout-redis
+  service:
+    type: ClusterIP
+    redisPort: 6379
+
+service:
+  metadata: 
+    name: checkout
+  spec:
+    type: ClusterIP
+  ports:
+    port: 80

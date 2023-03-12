@@ -1,0 +1,80 @@
+image:
+  repository: public.ecr.aws/aws-containers/retail-store-sample-cart
+  tag: "latest"
+
+service:
+  name: carts
+  type: ClusterIP
+  port: 80
+  targetPort: 8080
+
+serevice-db:
+  name: carts-dynamodb
+  type: ClusterIP
+  port: 8000
+  targetPort: 8000
+
+deployment:
+  name: carts
+  replicas: 1
+  container:
+    name: carts
+    env:
+      - name: JAVA_OPTS
+        value: -XX:MaxRAMPercentage={{ .Values.javaMaxRAMPercentage }} -Djava.security.egd=file:/dev/urandom
+      - name: SPRING_PROFILES_ACTIVE
+        value: "dynamodb"
+    image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+    imagePullPolicy: "IfNotPresent"
+    resources:
+      limits:
+        cpu: "1"
+        memory: "1Gi"
+      requests:
+        cpu: "250m"
+        memory: "1Gi"
+    ports:
+      - name: "http"
+        containerPort: 8080
+        protocol: "TCP"
+    livenessProbe:
+      httpGet:
+        path: "/actuator/health/liveness"
+        port: 8080
+      initialDelaySeconds: 45
+      periodSeconds: 3
+    volumeMounts:
+      - mountPath: "/tmp"
+        name: "tmp-volume"
+  volume:
+    name: "tmp-volume"
+    emptyDir:
+      medium: "Memory"
+
+deployment-db:
+  metadata:
+    name: carts-dynamodb
+  spec:
+    replicas: 1
+image:
+  repository: amazon/dynamodb-local
+  tag: 1.13.1
+  pullPolicy: IfNotPresent
+containerName: dynamodb
+containerPort: 8000
+
+namespace:
+  metadata:
+    namespaceName: carts
+    labels: 
+      appCreatedBy: eks-workshop
+
+configMap:
+  metadata: 
+    name: Items
+  data:
+    tableName: Items
+    createTable: true
+    awsAccessKeyId: key
+    awsSecretAccessKey: secret
+    dynamoDbEndpoint: http://carts-dynamodb:8000

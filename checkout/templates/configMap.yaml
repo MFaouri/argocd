@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.configMap.name }}
+data:
+  REDIS_URL: {{ .Values.configMap.redisUrl }}
+  ENDPOINTS_ORDERS: {{ .Values.configMap.ordersEndpoint }}

@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.metadata.name }}
+data:
+  SPRING_PROFILES_ACTIVE: {{ .Values.data.springProfilesActive }}
+  SPRING_RABBITMQ_HOST: {{ .Values.data.springRabbitmqHost }}

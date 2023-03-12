@@ -1,0 +1,13 @@
+depolyment:
+  replicas: 1
+  maxRAMPercentage: 75.0
+  image:
+    repository: public.ecr.aws/aws-containers/retail-store-sample-ui
+    tag: latest
+    pullPolicy: IfNotPresent
+  resources:
+    limits:
+      memory: 1.5Gi
+    requests:
+      cpu: 250m
+      memory: 1.5Gi

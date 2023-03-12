@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ .Values.statefulSet.name }}
+  labels:
+    app.kubernetes.io/team: database
+spec:
+  replicas: {{ .Values.statefulSet.replicas }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ .Values.app.name }}
+      app.kubernetes.io/instance: {{ .Values.app.instance }}
+      app.kubernetes.io/component: mysql
+  serviceName: mysql
+  template:
+    metadata:
+      labels: 
+        app.kubernetes.io/name: {{ .Values.app.name }}
+        app.kubernetes.io/instance: {{ .Values.app.instance }}
+        app.kubernetes.io/component: mysql
+        app.kubernetes.io/team: database
+    spec:
+      containers:
+        - name: mysql
+          image: "{{ .Values.mysql.image }}"
+          args: 
+            - "--ignore-db-dir=lost+found"
+          imagePullPolicy: {{ .Values.mysql.imagePullPolicy }}
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.secrets.mysqlSecretName }}
+                  key: password
+            - name: MYSQL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.secrets.catalogDbSecretName }}
+                  key: username
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.secrets.catalogDbSecretName }}
+                  key: password
+            - name: MYSQL_DATABASE
+              value: {{ .Values.mysql.databaseName }}
+          ports:
+            - name: mysql
+              containerPort: 3306
+              protocol: TCP
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/mysql
+      volumes:
+        - name: data
+          {{- if .Values.statefulSet.persistentVolumeClaim.enabled }}
+          persistentVolumeClaim:
+            claimName: {{ .Values.statefulSet.persistentVolumeClaim.name }}
+          {{- else }}
+          emptyDir: {}
+          {{- end }}

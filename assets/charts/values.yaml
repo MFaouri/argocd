@@ -1,0 +1,28 @@
+configMap:
+  metadata:
+    name: assets
+  data:
+    PORT: 8080
+
+namespace:
+  metadata: 
+    name: assets
+
+deployment:
+  metadata:
+    name: assets
+  spec:
+    replicas: 1
+  annotations:
+    prometheus.io/port: "8080"
+    prometheus.io/scrape: "true"
+  resources:
+    cpu: 250m
+    memory: 512Mi
+
+service:
+  metadata:
+    name: assets
+    instance: assets
+  service:
+    port: 80

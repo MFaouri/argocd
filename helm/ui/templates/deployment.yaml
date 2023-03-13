@@ -1,12 +1,12 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "myapp.fullname" . }}
+  name: ui
   labels:
     app.kubernetes.io/created-by: eks-workshop
     app.kubernetes.io/type: app
 spec:
-  replicas: {{ .Values.replicas }}
+  replicas: 1
   selector:
     matchLabels:
       app.kubernetes.io/name: ui
@@ -31,7 +31,7 @@ spec:
         - name: ui
           env:
             - name: JAVA_OPTS
-              value: -XX:MaxRAMPercentage={{ .Values.maxRAMPercentage }} -Djava.security.egd=file:/dev/urandom
+              value: -XX:MaxRAMPercentage=75.0 -Djava.security.egd=file:/dev/urandom
           envFrom:
             - configMapRef:
                 name: ui
@@ -44,8 +44,8 @@ spec:
             readOnlyRootFilesystem: true
             runAsNonRoot: true
             runAsUser: 1000
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          image: "public.ecr.aws/aws-containers/retail-store-sample-ui:latest"
+          imagePullPolicy: IfNotPresent
           ports:
             - name: http
               containerPort: 8080
@@ -58,10 +58,10 @@ spec:
             periodSeconds: 20
           resources:
             limits:
-              memory: {{ .Values.resources.limits.memory }}
+              memory: 1.5Gi
             requests:
-              cpu: {{ .Values.resources.requests.cpu }}
-              memory: {{ .Values.resources.requests.memory }}
+              cpu: 250m
+              memory: 1.5Gi
           volumeMounts:
             - mountPath: /tmp
               name: tmp-volume

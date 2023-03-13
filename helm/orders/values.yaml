@@ -5,21 +5,16 @@ configMap:
     springProfilesActive: mysql,rabbitmq
     springRabbitmqHost: rabbitmq.rabbitmq.svc
 
-secrets:
+namespace:
   metadata:
-    name: orders-db
-  data:
-    url: "jdbc:mysql://orders-mysql:3306/orders"
-    username: "orders_user"
-    password: "default_password"
+    name: orders
 
-service-mysql:
-  metadata:
-    name: orders-mysql
-  spec:
-    port: 3306
-    targetPort: mysql
-    portName: mysql
+service:
+  name: orders-mysql
+  port: 3306
+  targetPort: mysql
+  portName: mysql
+
 
 deployment-mysql:
   spec:

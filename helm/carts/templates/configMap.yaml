@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ .Values.metadata.name}}
+  name: {{ .Values.service.name}}
 data:
-  CARTS_DYNAMODB_TABLENAME: {{ .Values.tableName }}
-  CARTS_DYNAMODB_CREATETABLE: {{ .Values.createTable }}
-  AWS_ACCESS_KEY_ID: {{ .Values.awsAccessKeyId }}
-  AWS_SECRET_ACCESS_KEY: {{ .Values.awsSecretAccessKey }}
-  CARTS_DYNAMODB_ENDPOINT: {{ .Values.dynamoDbEndpoint }}
+  CARTS_DYNAMODB_TABLENAME: Items
+  CARTS_DYNAMODB_CREATETABLE: "true"
+  AWS_ACCESS_KEY_ID: key
+  AWS_SECRET_ACCESS_KEY: secret
+  CARTS_DYNAMODB_ENDPOINT: http://carts-dynamodb:8000

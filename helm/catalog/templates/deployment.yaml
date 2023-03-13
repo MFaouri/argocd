@@ -1,83 +1,83 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "catalog.name" . }}
+  name: {{ .Values.namespace.catalog }}
   labels:
-    app.kubernetes.io/created-by: {{ .Release.Name }}
+    app.kubernetes.io/created-by: eks-workshop
     app.kubernetes.io/type: app
 spec:
-  replicas: {{ .Values.catalog.replicaCount }}
+  replicas: {{ .Values.deployment.replicaCount }}
   selector:
     matchLabels:
-      app.kubernetes.io/name: {{ include "catalog.name" . }}
-      app.kubernetes.io/instance: {{ .Release.Name }}
+      app.kubernetes.io/name: catalog
+      app.kubernetes.io/instance: catalog
       app.kubernetes.io/component: service
   template:
     metadata:
       annotations:
         prometheus.io/path: /metrics
-        prometheus.io/port: "{{ .Values.catalog.prometheusPort }}"
-        prometheus.io/scrape: "{{ .Values.catalog.prometheusScrape }}"
+        prometheus.io/port: "8080"
+        prometheus.io/scrape: "true"
       labels:
-        app.kubernetes.io/name: {{ include "catalog.name" . }}
-        app.kubernetes.io/instance: {{ .Release.Name }}
+        app.kubernetes.io/name: catalog
+        app.kubernetes.io/instance: catalog
         app.kubernetes.io/component: service
-        app.kubernetes.io/created-by: {{ .Release.Name }}
+        app.kubernetes.io/created-by: eks-workshop
     spec:
-      serviceAccountName: {{ include "catalog.serviceAccountName" . }}
+      serviceAccountName: catalog
       securityContext:
-        fsGroup: {{ .Values.catalog.fsGroup }}
+        fsGroup: 1000
       containers:
-        - name: {{ .Values.catalog.containerName }}
+        - name: catalog
           env:
             - name: DB_USER
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "catalog.dbSecretName" . }}
+                  name: catalog-db
                   key: username
             - name: DB_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "catalog.dbSecretName" . }}
+                  name: catalog-db
                   key: password
           envFrom:
             - configMapRef:
-                name: {{ include "catalog.configMapName" . }}
+                name: catalog
           securityContext:
             capabilities:
               drop:
               - ALL
-            readOnlyRootFilesystem: {{ .Values.catalog.readOnlyRootFilesystem }}
-            runAsNonRoot: {{ .Values.catalog.runAsNonRoot }}
-            runAsUser: {{ .Values.catalog.runAsUser }}
-          image: "{{ .Values.catalog.image.repository }}:{{ .Values.catalog.image.tag }}"
-          imagePullPolicy: {{ .Values.catalog.image.pullPolicy }}
+            readOnlyRootFilesystem: true
+            runAsNonRoot: true
+            runAsUser: 1000
+          image: "public.ecr.aws/aws-containers/retail-store-sample-catalog:latest"
+          imagePullPolicy: IfNotPresent
           ports:
             - name: http
-              containerPort: {{ .Values.catalog.containerPort }}
+              containerPort: 8080
               protocol: TCP
           livenessProbe:
             httpGet:
-              path: {{ .Values.catalog.livenessProbePath }}
-              port: {{ .Values.catalog.containerPort }}
-            initialDelaySeconds: {{ .Values.catalog.livenessProbeInitialDelaySeconds }}
-            periodSeconds: {{ .Values.catalog.livenessProbePeriodSeconds }}
+              path: /health
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 3
           readinessProbe:
             httpGet:
-              path: {{ .Values.catalog.readinessProbePath }}
-              port: {{ .Values.catalog.containerPort }}
-            successThreshold: {{ .Values.catalog.readinessProbeSuccessThreshold }}
-            periodSeconds: {{ .Values.catalog.readinessProbePeriodSeconds }}
+              path: /health
+              port: 8080
+            successThreshold: 3
+            periodSeconds: 5
           resources:
             limits:
-              memory: {{ .Values.catalog.resources.limits.memory }}
+              memory: 512Mi
             requests:
-              cpu: {{ .Values.catalog.resources.requests.cpu }}
-              memory: {{ .Values.catalog.resources.requests.memory }}
+              cpu: 250m
+              memory: 512Mi
           volumeMounts:
-            - mountPath: {{ .Values.catalog.volumeMountPath }}
-              name: {{ .Values.catalog.volumeMountName }}
+            - mountPath: /tmp
+              name: tmp-volume
       volumes:
-        - name: {{ .Values.catalog.volumeMountName }}
+        - name: tmp-volume
           emptyDir:
-            medium: {{ .Values.catalog.volumeMedium }}
+            medium: Memory

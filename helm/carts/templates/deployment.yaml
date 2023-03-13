@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Release.Name }}-carts
+  name: {{ .Values.deployment.name }}
   labels:
     app.kubernetes.io/created-by: eks-workshop
     app.kubernetes.io/type: app
@@ -10,7 +10,7 @@ spec:
   selector:
     matchLabels:
       app.kubernetes.io/name: carts
-      app.kubernetes.io/instance: {{ .Release.Name }}-carts
+      app.kubernetes.io/instance: {{ .Values.deployment.name }}
       app.kubernetes.io/component: service
   template:
     metadata:
@@ -20,23 +20,23 @@ spec:
         prometheus.io/scrape: "true"
       labels:
         app.kubernetes.io/name: carts
-        app.kubernetes.io/instance: {{ .Release.Name }}-carts
+        app.kubernetes.io/instance: {{ .Values.deployment.name }}
         app.kubernetes.io/component: service
         app.kubernetes.io/created-by: eks-workshop
-    spec:
-      serviceAccountName: {{ .Values.serviceAccount }}
+        spec:
+      serviceAccountName: carts
       securityContext:
         fsGroup: 1000
       containers:
         - name: carts
           env:
             - name: JAVA_OPTS
-              value: {{ .Values.javaOpts }}
+              value: -XX:MaxRAMPercentage=75.0 -Djava.security.egd=file:/dev/urandom
             - name: SPRING_PROFILES_ACTIVE
-              value: {{ .Values.springProfiles }}
+              value: dynamodb
           envFrom:
             - configMapRef:
-                name: {{ .Values.configMap }}
+                name: carts
           securityContext:
             capabilities:
               drop:
@@ -44,8 +44,8 @@ spec:
             readOnlyRootFilesystem: true
             runAsNonRoot: true
             runAsUser: 1000
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          image: "public.ecr.aws/aws-containers/retail-store-sample-cart:latest"
+          imagePullPolicy: IfNotPresent
           ports:
             - name: http
               containerPort: 8080
@@ -54,14 +54,14 @@ spec:
             httpGet:
               path: /actuator/health/liveness
               port: 8080
-            initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
-            periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
+            initialDelaySeconds: 45
+            periodSeconds: 3
           resources:
             limits:
-              memory: {{ .Values.resources.limits.memory }}
+              memory: 1Gi
             requests:
-              cpu: {{ .Values.resources.requests.cpu }}
-              memory: {{ .Values.resources.requests.memory }}
+              cpu: 250m
+              memory: 1Gi
           volumeMounts:
             - mountPath: /tmp
               name: tmp-volume

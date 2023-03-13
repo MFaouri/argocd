@@ -1,12 +1,12 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Values.metadata.name}}
+  name: {{ .Values.deployment_db.metadata.name }}
   labels:
     app.kubernetes.io/created-by: eks-workshop
     app.kubernetes.io/team: database
 spec:
-  replicas: {{ .Values.replicas }}
+  replicas: {{ .Values.deployment_db.spec.replicas }}
   selector:
     matchLabels:
       app.kubernetes.io/name: carts
@@ -22,10 +22,10 @@ spec:
         app.kubernetes.io/team: database
     spec:
       containers:
-        - name: {{ .Values.containerName }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+        - name: dynamodb
+          image: "amazon/dynamodb-local:1.13.1"
+          imagePullPolicy: IfNotPresent
           ports:
             - name: dynamodb
-              containerPort: {{ .Values.containerPort }}
+              containerPort: 8000
               protocol: TCP

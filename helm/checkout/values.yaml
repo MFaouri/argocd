@@ -8,11 +8,11 @@ configMap:
 serviceAccount:
   name: checkout
 
-  namespace:
+namespace:
   name: checkout
   createdBy: eks-workshop
 
-deployment-redis.yaml:
+deployment_redis:
   replicas: 1
   labels:
     createdBy: eks-workshop
@@ -37,10 +37,10 @@ checkout:
       cpu: 250m
       memory: 512Mi
 
-service-redis:
+service_redis:
   metadata:
     name: checkout-redis
-  service:
+  service_db:
     type: ClusterIP
     redisPort: 6379
 

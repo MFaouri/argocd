@@ -3,5 +3,5 @@ kind: ConfigMap
 metadata:
   name: {{ .Values.configMap.name }}
 data:
-  REDIS_URL: {{ .Values.configMap.redisUrl }}
-  ENDPOINTS_ORDERS: {{ .Values.configMap.ordersEndpoint }}
+  REDIS_URL: redis://checkout-redis:6379
+  ENDPOINTS_ORDERS: http://orders.orders.svc:80

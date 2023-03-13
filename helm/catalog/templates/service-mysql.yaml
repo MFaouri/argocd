@@ -3,15 +3,15 @@ kind: Service
 metadata:
   name: {{ .Values.serviceName }}
   labels:
-    app.kubernetes.io/name: {{ .Values.appName }}
+    app.kubernetes.io/name: eks-workshop
 spec:
   type: {{ .Values.serviceType }}
   ports:
-    - port: {{ .Values.port }}
+    - port: 3306
       targetPort: mysql
       protocol: TCP
       name: mysql
   selector:
-    app.kubernetes.io/name: {{ .Values.appName }}
-    app.kubernetes.io/instance: {{ .Values.appInstance }}
+    app.kubernetes.io/name: catalog
+    app.kubernetes.io/instance: catalog
     app.kubernetes.io/component: mysql

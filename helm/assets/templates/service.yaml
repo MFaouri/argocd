@@ -1,17 +1,17 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ .Values.metadata.name }}
+  name: {{ .Values.service.metadata.name }}
   labels:
     app.kubernetes.io/created-by: eks-workshop
 spec:
   type: ClusterIP
   ports:
-    - port: {{ .Values.service.port }}
+    - port: {{ .Values.service.service.port }}
       targetPort: http
       protocol: TCP
       name: http
   selector:
-    app.kubernetes.io/name: {{ .Values.metadata.name }}
-    app.kubernetes.io/instance: {{ .Values.metadata.instance }}
+    app.kubernetes.io/name: {{ .Values.service.metadata.name }}
+    app.kubernetes.io/instance: {{ .Values.service.metadata.instance }}
     app.kubernetes.io/component: service

@@ -8,7 +8,7 @@ service:
   port: 80
   targetPort: 8080
 
-serevice-db:
+service_db:
   name: carts-dynamodb
   type: ClusterIP
   port: 8000
@@ -51,17 +51,17 @@ deployment:
     emptyDir:
       medium: "Memory"
 
-deployment-db:
+deployment_db:
   metadata:
     name: carts-dynamodb
   spec:
     replicas: 1
-image:
-  repository: amazon/dynamodb-local
-  tag: 1.13.1
-  pullPolicy: IfNotPresent
-containerName: dynamodb
-containerPort: 8000
+  image:
+    repository: amazon/dynamodb-local
+    tag: 1.13.1
+    pullPolicy: IfNotPresent
+  containerName: dynamodb
+  containerPort: 8000
 
 namespace:
   metadata:

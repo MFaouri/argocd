@@ -2,3 +2,28 @@ apiVersion: v2
 name: mychart
 description: My awesome Helm chart
 version: 0.1.0
+dependencies:
+  - name: assets
+    version: 0.1.0
+    repository: "file://assets/"
+  - name: carts
+    version: 0.1.0
+    repository: "file://carts/"
+  - name: catalog
+    version: 0.1.0
+    repository: "file://catalog/"
+  - name: checkout
+    version: 0.1.0
+    repository: "file://checkout/"
+  - name: orders
+    version: 0.1.0
+    repository: "file://orders/"
+  - name: others
+    version: 0.1.0
+    repository: "file://others/"
+  - name: rabbitmq
+    version: 0.1.0
+    repository: "file://rabbitmq/"
+  - name: ui
+    version: 0.1.0
+    repository: "file://ui/"

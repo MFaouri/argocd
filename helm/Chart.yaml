@@ -9,12 +9,12 @@ dependencies:
   # - name: carts
   #   version: 0.1.0
   #   repository: "file://carts/"
-  - name: catalog
-    version: 0.1.0
-    repository: "file://catalog/"
-  # - name: checkout
+  # - name: catalog
   #   version: 0.1.0
-  #   repository: "file://checkout/"
+  #   repository: "file://catalog/"
+  - name: checkout
+    version: 0.1.0
+    repository: "file://checkout/"
   # - name: orders
   #   version: 0.1.0
   #   repository: "file://orders/"

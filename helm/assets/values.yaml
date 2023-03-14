@@ -1,8 +1,3 @@
-configMap:
-  metadata:
-    name: assets
-  data:
-    PORT: 8080
 
 namespace:
   metadata: 

@@ -3,10 +3,10 @@ kind: Deployment
 metadata:
   name: checkout-redis
   labels:
-    app.kubernetes.io/created-by: {{ .Values.deployment_redis.labels.createdBy }}
-    app.kubernetes.io/team: {{ .Values.deployment_redis.labels.team }}
+    app.kubernetes.io/created-by: eks-workshop
+    app.kubernetes.io/team: database
 spec:
-  replicas: {{ .Values.replicas }}
+  replicas: 1
   selector:
     matchLabels:
       app.kubernetes.io/name: checkout
@@ -18,14 +18,14 @@ spec:
         app.kubernetes.io/name: checkout
         app.kubernetes.io/instance: checkout
         app.kubernetes.io/component: redis
-        app.kubernetes.io/created-by: {{ .Values.deployment_redis.labels.createdBy }}
-        app.kubernetes.io/team: {{ .Values.deployment_redis.labels.team }}
+        app.kubernetes.io/created-by: eks-workshop
+        app.kubernetes.io/team: database
     spec:
       containers:
         - name: redis
-          image: "{{ .Values.deployment_redis.image.repository }}:{{ .Values.deployment_redis.image.tag }}"
-          imagePullPolicy: {{ .Values.deployment_redis.image.pullPolicy }}
+          image: "public.ecr.aws/docker/library/redis:6.0-alpine"
+          imagePullPolicy: IfNotPresent
           ports:
             - name: redis
-              containerPort: {{ .Values.containerPort }}
+              containerPort: 6379
               protocol: TCP

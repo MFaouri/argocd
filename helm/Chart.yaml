@@ -3,12 +3,12 @@ name: mychart
 description: My awesome Helm chart
 version: 0.1.0
 dependencies:
-  - name: assets
-    version: 0.1.0
-    repository: "file://assets/"
-  # - name: carts
+  # - name: assets
   #   version: 0.1.0
-  #   repository: "file://carts/"
+  #   repository: "file://assets/"
+  - name: carts
+    version: 0.1.0
+    repository: "file://carts/"
   # - name: catalog
   #   version: 0.1.0
   #   repository: "file://catalog/"

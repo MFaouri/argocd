@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: ui-alb
   annotations:
-    service.beta.kubernetes.io/aws-load-balancer-type: alb 
+    service.beta.kubernetes.io/aws-load-balancer-type: alb
     service.beta.kubernetes.io/aws-load-balancer-scheme: internet-facing
   namespace: kustomize
 spec:

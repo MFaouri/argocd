@@ -6,12 +6,12 @@ dependencies:
   # - name: assets
   #   version: 0.1.0
   #   repository: "file://assets/"
-  - name: carts
-    version: 0.1.0
-    repository: "file://carts/"
-  # - name: catalog
+  # - name: carts
   #   version: 0.1.0
-  #   repository: "file://catalog/"
+  #   repository: "file://carts/"
+  - name: catalog
+    version: 0.1.0
+    repository: "file://catalog/"
   # - name: checkout
   #   version: 0.1.0
   #   repository: "file://checkout/"

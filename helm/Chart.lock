@@ -1,6 +1,6 @@
 dependencies:
-- name: carts
-  repository: file://carts/
+- name: catalog
+  repository: file://catalog/
   version: 0.1.0
-digest: sha256:f1f5c25b3cbf21b263e271bcb35f628b313307d8b4f6abf9f796121f25bf7ba1
-generated: "2023-03-14T13:44:37.425550462+03:00"
+digest: sha256:9d92ef2da70b75e9d47bc25e2df0635ab5b275b89bc2181af8fd9fb14ba13ff9
+generated: "2023-03-14T13:46:18.587498942+03:00"

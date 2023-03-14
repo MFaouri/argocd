@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ .Values.configMap.metadata.name }}
+  name: orders
 data:
   SPRING_PROFILES_ACTIVE: mysql,rabbitmq
   SPRING_RABBITMQ_HOST: rabbitmq.rabbitmq.svc

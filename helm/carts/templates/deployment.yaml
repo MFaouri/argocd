@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Values.deployment.name }}
+  name: carts
   labels:
     app.kubernetes.io/created-by: eks-workshop
     app.kubernetes.io/type: app
 spec:
-  replicas: {{ .Values.replicas }}
+  replicas: 1
   selector:
     matchLabels:
       app.kubernetes.io/name: carts
-      app.kubernetes.io/instance: {{ .Values.deployment.name }}
+      app.kubernetes.io/instance: carts
       app.kubernetes.io/component: service
   template:
     metadata:
@@ -20,10 +20,10 @@ spec:
         prometheus.io/scrape: "true"
       labels:
         app.kubernetes.io/name: carts
-        app.kubernetes.io/instance: {{ .Values.deployment.name }}
+        app.kubernetes.io/instance: carts
         app.kubernetes.io/component: service
         app.kubernetes.io/created-by: eks-workshop
-        spec:
+    spec:
       serviceAccountName: carts
       securityContext:
         fsGroup: 1000

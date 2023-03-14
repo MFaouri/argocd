@@ -2,5 +2,11 @@ dependencies:
 - name: assets
   repository: file://assets/
   version: 0.1.0
-digest: sha256:4c58d3338010c55d7f98ac840af9ee1addad16eea624d27b20d1faf05b4642d2
-generated: "2023-03-14T12:48:57.633461689+03:00"
+- name: carts
+  repository: file://carts/
+  version: 0.1.0
+- name: catalog
+  repository: file://catalog/
+  version: 0.1.0
+digest: sha256:a89fb96c75894ca614d5e32648fa64724d6db06763ea490034bb469f218369b6
+generated: "2023-03-14T13:22:56.850196302+03:00"

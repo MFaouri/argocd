@@ -1,12 +1,12 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Values.namespace.catalog }}
+  name: catalog
   labels:
     app.kubernetes.io/created-by: eks-workshop
     app.kubernetes.io/type: app
 spec:
-  replicas: {{ .Values.deployment.replicaCount }}
+  replicas: 1
   selector:
     matchLabels:
       app.kubernetes.io/name: catalog

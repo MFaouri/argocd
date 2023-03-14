@@ -12,6 +12,7 @@ spec:
       protocol: TCP
       name: {{ .Values.service.name }}
   selector:
-    app.kubernetes.io/name: {{ .Values.appName }}
-    app.kubernetes.io/instance: {{ .Values.appInstance }}
-    app.kubernetes.io/component: {{ .Values.component }}
+    app.kubernetes.io/name: carts
+    app.kubernetes.io/instance: carts
+    app.kubernetes.io/component: service
+

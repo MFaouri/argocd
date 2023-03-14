@@ -12,6 +12,6 @@ spec:
       protocol: TCP
       name: http
   selector:
-    app.kubernetes.io/name: {{ .Values.service.metadata.name }}
-    app.kubernetes.io/instance: {{ .Values.service.metadata.instance }}
+    app.kubernetes.io/name: assets
+    app.kubernetes.io/instance: assets
     app.kubernetes.io/component: service

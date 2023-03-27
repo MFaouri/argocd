@@ -24,7 +24,7 @@ dependencies:
   repository: file://ui/
   version: 0.1.0
 - name: karpenter
-  repository: file://ui/
+  repository: file://karpenter/
   version: 0.1.0
-digest: sha256:17038443802885d9a2d213cb7646e8c25f63bd86efc6b3ce7065435c00c57fdc
-generated: "2023-03-27T15:30:54.899884374+03:00"
+digest: sha256:3e142df33c9514974158031d9b7aaf28d7f3ec2c3b98bed806090ba29b5edfd1
+generated: "2023-03-27T17:02:15.793536361+03:00"

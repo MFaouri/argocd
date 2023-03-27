@@ -158,7 +158,7 @@ logEncoding: console
 # -- Cluster name.
 clusterName: "mfaouri-eks"
 # -- Cluster endpoint.
-clusterEndpoint: ""
+clusterEndpoint: "https://01F65DF52DB64C590DF2860D24B77391.gr7.eu-central-1.eks.amazonaws.com"
 aws:
   # -- The default instance profile to use when launching nodes on AWS
   defaultInstanceProfile: ""

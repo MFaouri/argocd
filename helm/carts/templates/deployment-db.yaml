@@ -1,12 +1,12 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Values.deployment_db.metadata.name }}
+  name: carts-dynamodb
   labels:
     app.kubernetes.io/created-by: eks-workshop
     app.kubernetes.io/team: database
 spec:
-  replicas: {{ .Values.deployment_db.spec.replicas }}
+  replicas: 1
   selector:
     matchLabels:
       app.kubernetes.io/name: carts

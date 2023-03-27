@@ -1,12 +1,12 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Values.deployment.metadata.name }}
+  name: assets
   labels:
     app.kubernetes.io/created-by: eks-workshop
     app.kubernetes.io/type: app
 spec:
-  replicas: {{ .Values.deployment.spec.replicas }}
+  replicas: 1
   selector:
     matchLabels:
       app.kubernetes.io/name: assets
@@ -50,11 +50,10 @@ spec:
             periodSeconds: 3
           resources:
             limits:
-              cpu: {{ .Values.deployment.resources.cpu }}
-              memory: {{ .Values.deployment.resources.memory }}
+              memory: 128Mi
             requests:
-              cpu: {{ .Values.deployment.resources.cpu }}
-              memory: {{ .Values.deployment.resources.memory }}
+              cpu: 128m
+              memory: 128Mi
           volumeMounts:
             - mountPath: /tmp
               name: tmp-volume

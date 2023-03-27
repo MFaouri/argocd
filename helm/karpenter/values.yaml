@@ -156,7 +156,7 @@ logLevel: debug
 # -- Gloabl log encoding
 logEncoding: console
 # -- Cluster name.
-clusterName: ""
+clusterName: "mfaouri-eks"
 # -- Cluster endpoint.
 clusterEndpoint: ""
 aws:

@@ -14,4 +14,4 @@ name: karpenter
 sources:
 - https://github.com/aws/karpenter/
 type: application
-version: 0.16.3
+version: 0.1.0

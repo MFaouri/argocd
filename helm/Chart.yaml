@@ -29,4 +29,4 @@ dependencies:
     repository: "file://ui/"
   - name: karpenter
     version: 0.1.0
-    repository: "file://ui/"
+    repository: "file://karpenter/"

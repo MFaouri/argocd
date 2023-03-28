@@ -51,7 +51,7 @@ priorityClassName: system-cluster-critical
 terminationGracePeriodSeconds:
 # -- Bind the pod to the host network.
 # This is required when using a custom CNI.
-hostNetwork: true
+hostNetwork: false
 # -- Configure the DNS Policy for the pod
 dnsPolicy: Default
 # -- Configure DNS Config for the pod
@@ -92,7 +92,7 @@ extraVolumes: []
 
 controller:
   # -- Controller image.
-  image: "public.ecr.aws/karpenter/controller:v0.16.3@sha256:68db4f092cf9cc83f5ef9e2fbc5407c2cb682e81f64dfaa700a7602ede38b1cf"
+  image: "public.ecr.aws/karpenter/controller:v0.16.0@sha256:15cb6fe00279442b752beaf642dc9d6a3a2a9570d6da77b9bd7681e4c61b0958"
   # -- SecurityContext for the controller container.
   securityContext: {}
   # -- Additional environment variables for the controller pod.
@@ -127,7 +127,7 @@ controller:
   batchIdleDuration: 1s
 webhook:
   # -- Webhook image.
-  image: "public.ecr.aws/karpenter/webhook:v0.16.3@sha256:96a2d9b06d6bc5127801f358f74b1cf2d289b423a2e9ba40c573c0b14b17dafa"
+  image: "public.ecr.aws/karpenter/webhook:v0.16.0@sha256:946c871c74fe63e3c1a6d3790ecf351ba4f19c99a08a7f9fbe21292e24de28b2"
   # -- SecurityContext for the webhook container.
   securityContext: {}
   # -- The container port to use for the webhook.
@@ -140,11 +140,11 @@ webhook:
   # -- Resources for the webhook pod.
   resources:
     requests:
-      cpu: 200m
-      memory: 100Mi
+      cpu: 100m
+      memory: 50Mi
     limits:
-      cpu: 200m
-      memory: 100Mi
+      cpu: 100m
+      memory: 50Mi
   # -- Webhook log level, defaults to the global log level
   logLevel: ""
   # -- Webhook log encoding, defaults to the global log encoding

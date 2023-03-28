@@ -161,4 +161,4 @@ clusterName: "mfaouri-eks"
 clusterEndpoint: "https://01F65DF52DB64C590DF2860D24B77391.gr7.eu-central-1.eks.amazonaws.com"
 aws:
   # -- The default instance profile to use when launching nodes on AWS
-  defaultInstanceProfile: ""
+  defaultInstanceProfile: "arn:aws:iam::926837946404:instance-profile/eks-a4c393da-16b0-83ab-3d87-796c9c10cdc4"

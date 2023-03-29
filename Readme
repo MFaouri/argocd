@@ -15,3 +15,37 @@ argocd app create my-app \
   --sync-policy auto
 
 
+
+
+helm upgrade --install karpenter karpenter/karpenter --namespace kustomize --set serviceAccount.create=true --version 0.16.0 --set controller.clusterName=mfaouri-eks --set controller.clusterEndpoint=https://289643570E05E35DB080CEE884058A97.gr7.eu-central-1.eks.amazonaws.com
+
+
+
+oidc_provider=$(aws eks describe-cluster --name mfaouri-eks --region $AWS_REGION --query "cluster.identity.oidc.issuer" --output text | sed -e "s/^https:\/\///")
+
+
+
+
+
+
+
+
+
+
+Unable to save changes: error patching resource: Pod "helm-karpenter-64b965cbd4-f66wd" is invalid: spec: Forbidden: pod updates may not change fields other than `spec.containers[*].image`, `spec.initContainers[*].image`, `spec.activeDeadlineSeconds`, `spec.tolerations` (only additions to existing tolerations) or `spec.terminationGracePeriodSeconds` (allow it to be set to 1 if it was previously negative)   core.PodSpec{    ... // 7 identical fields    DNSPolicy: "Default",    NodeSelector: {"kubernetes.io/os": "linux"}, -  ServiceAccountName: "helm-karpenter", +  ServiceAccountName: "karpenter",    AutomountServiceAccountToken: nil,    NodeName: "ip-10-1-29-204.eu-central-1.compute.internal",    ... // 19 identical fields   } 
+
+
+
+
+
+
+
+
+
+,
+			"Condition": {
+				"StringEquals": {
+					"oidc.eks.eu-central-1.amazonaws.com/id/289643570E05E35DB080CEE884058A97:aud": "sts.amazonaws.com",
+					"oidc.eks.eu-central-1.amazonaws.com/id/289643570E05E35DB080CEE884058A97:sub": "system:serviceaccount:kustomize:karpenter"
+				}
+			}

@@ -150,7 +150,7 @@ spec:
                   resource: limits.memory
             {{- if .Values.aws.defaultInstanceProfile }}
             - name: AWS_DEFAULT_INSTANCE_PROFILE
-              value: {{ .Values.aws.defaultInstanceProfile }}
+              value: 
             {{- end }}
           {{- with .Values.webhook.env }}
             {{- toYaml . | nindent 12 }}

@@ -19,7 +19,7 @@ serviceAccount:
   # If not set and create is true, a name is generated using the fullname template.
   name: ""
   # -- Additional annotations for the ServiceAccount.
-  annotations: {arn:aws:iam::926837946404:role/karpenter-controller-mfaouri-eks}
+  annotations: {}
 serviceMonitor:
   # -- Specifies whether a ServiceMonitor should be created.
   enabled: false

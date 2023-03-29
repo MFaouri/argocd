@@ -7,7 +7,7 @@ additionalLabels: {}
 # app: karpenter
 
 # -- Additional annotations to add into metadata.
-additionalAnnotations: {}
+additionalAnnotations: {arn:aws:iam::926837946404:role/karpenter-controller-mfaouri-eks}
 # -- Image pull policy for Docker images.
 imagePullPolicy: IfNotPresent
 # -- Image pull secrets for Docker images.

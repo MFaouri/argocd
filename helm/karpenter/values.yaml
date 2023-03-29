@@ -190,7 +190,7 @@ settings:
     # -- Cluster endpoint. If not set, will be discovered during startup (EKS only)
     clusterEndpoint: "https://289643570E05E35DB080CEE884058A97.gr7.eu-central-1.eks.amazonaws.com"
     # -- The default instance profile to use when launching nodes
-    defaultInstanceProfile: "eks-66c39611-2d81-3267-9bd0-ab5c0fd89898"
+    defaultInstanceProfile: "arn:aws:iam::926837946404:instance-profile/eks-66c39611-2d81-3267-9bd0-ab5c0fd89898"
     # -- If true then instances that support pod ENI will report a vpc.amazonaws.com/pod-eni resource
     enablePodENI: false
     # -- Indicates whether new nodes should use ENI-based pod density

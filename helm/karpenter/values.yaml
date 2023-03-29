@@ -7,7 +7,7 @@ additionalLabels: {}
 # app: karpenter
 
 # -- Additional annotations to add into metadata.
-additionalAnnotations: {arn:aws:iam::926837946404:role/karpenter-controller-mfaouri-eks}
+additionalAnnotations: {}
 # -- Image pull policy for Docker images.
 imagePullPolicy: IfNotPresent
 # -- Image pull secrets for Docker images.
@@ -19,7 +19,7 @@ serviceAccount:
   # If not set and create is true, a name is generated using the fullname template.
   name: ""
   # -- Additional annotations for the ServiceAccount.
-  annotations: {}
+  annotations: {arn:aws:iam::926837946404:role/karpenter-controller-mfaouri-eks}
 serviceMonitor:
   # -- Specifies whether a ServiceMonitor should be created.
   enabled: false

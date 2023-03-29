@@ -15,6 +15,3 @@ argocd app create my-app \
   --sync-policy auto
 
 
-
-
-UW5kUFYwVk9ibkZFWjFsTk0xZzNZUT09

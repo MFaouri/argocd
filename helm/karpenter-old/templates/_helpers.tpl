@@ -64,18 +64,6 @@ Create the name of the service account to use
 {{- end }}
 {{- end }}
 
-{{/*
-Karpenter image to use
-*/}}
-{{- define "karpenter.controller.image" -}}
-{{- if .Values.controller.image.digest }}
-{{- printf "%s:%s@%s" .Values.controller.image.repository  (default (printf "v%s" .Chart.AppVersion) .Values.controller.image.tag) .Values.controller.image.digest }}
-{{- else }}
-{{- printf "%s:%s" .Values.controller.image.repository  (default (printf "v%s" .Chart.AppVersion) .Values.controller.image.tag) }}
-{{- end }}
-{{- end }}
-
-
 {{/* Get PodDisruptionBudget API Version */}}
 {{- define "karpenter.pdb.apiVersion" -}}
 {{- if and (.Capabilities.APIVersions.Has "policy/v1") (semverCompare ">= 1.21-0" .Capabilities.KubeVersion.Version) -}}
@@ -83,53 +71,4 @@ Karpenter image to use
 {{- else -}}
 {{- print "policy/v1beta1" -}}
 {{- end -}}
-{{- end -}}
-
-{{/*
-Flatten Settings Map using "." syntax
-*/}}
-{{- define "flattenSettings" -}}
-{{- $map := first . -}}
-{{- $label := last . -}}
-{{- range $key := (keys $map | uniq | sortAlpha) }}
-  {{- $sublabel := $key -}}
-  {{- $val := (get $map $key) -}}
-  {{- if $label -}}
-    {{- $sublabel = list $label $key | join "." -}}
-  {{- end -}}
-  {{/* Special-case "tags" since we want this to be a JSON object */}}
-  {{- if eq $key "tags" -}}
-    {{- if not (kindIs "invalid" $val) -}}
-      {{- $sublabel | quote | nindent 2 }}: {{ $val | toJson | quote }}
-    {{- end -}}
-  {{- else if kindOf $val | eq "map" -}}
-    {{- list $val $sublabel | include "flattenSettings" -}}
-  {{- else -}}
-  {{- if not (kindIs "invalid" $val) -}}
-    {{- $sublabel | quote | nindent 2 -}}: {{ $val | quote }}
-  {{- end -}}
-{{- end -}}
-{{- end -}}
-{{- end -}}
-
-{{/*
-Flatten the stdout logging outputs from args provided
-*/}}
-{{- define "karpenter.controller.outputPathsList" -}}
-{{ $paths := list -}}
-{{- range .Values.controller.outputPaths -}}
-    {{- $paths = printf "%s" . | quote  | append $paths -}}
-{{- end -}}
-{{ $paths | join ", " }}
-{{- end -}}
-
-{{/*
-Flatten the stderr logging outputs from args provided
-*/}}
-{{- define "karpenter.controller.errorOutputPathsList" -}}
-{{ $paths := list -}}
-{{- range .Values.controller.errorOutputPaths -}}
-    {{- $paths = printf "%s" . | quote  | append $paths -}}
-{{- end -}}
-{{ $paths | join ", " }}
 {{- end -}}

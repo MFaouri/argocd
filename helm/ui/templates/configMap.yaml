@@ -7,4 +7,4 @@ data:
   ENDPOINTS_CARTS: http://carts.helm.svc:80
   ENDPOINTS_ORDERS: http://orders.helm.svc:80
   ENDPOINTS_ASSETS: http://assets.helm.svc:80
-  ENDPOINTS_CHECKOUT: http://checkout.helm.svc:8
+  ENDPOINTS_CHECKOUT: http://checkout.helm.svc:80
